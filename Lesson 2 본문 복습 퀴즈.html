@@ -1,0 +1,496 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Lesson 2 본문 복습 퀴즈</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@700&display=swap">
+<style>
+/* Layout: one question per screen, case-file feel; evidence-marker tents number the questions */
+:root {
+  --bg: #EEF1F4;
+  --surface: #FFFFFF;
+  --ink: #16212B;
+  --muted: #5B6975;
+  --line: #D3DAE1;
+  --note: #F5F7F9;
+  --marker: #F2B705;
+  --marker-ink: #2B2100;
+  --accent: #1F4E79;
+  --accent-ink: #FFFFFF;
+  --good: #1E7A4F;
+  --good-bg: #E3F3EA;
+  --bad: #B4372B;
+  --bad-bg: #FBE9E6;
+  --font-body: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  --font-display: 'Noto Serif KR', 'Apple SD Gothic Neo', 'Malgun Gothic', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10171D; --surface: #18222B; --ink: #E7EDF2; --muted: #9AA8B4; --line: #2B3946;
+    --note: #1D2933; --marker: #F2B705; --marker-ink: #1E1700; --accent: #6FA8DC; --accent-ink: #0B1722;
+    --good: #6FD0A0; --good-bg: #15332A; --bad: #FF9A8D; --bad-bg: #3A1E1B;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #10171D; --surface: #18222B; --ink: #E7EDF2; --muted: #9AA8B4; --line: #2B3946;
+  --note: #1D2933; --marker: #F2B705; --marker-ink: #1E1700; --accent: #6FA8DC; --accent-ink: #0B1722;
+  --good: #6FD0A0; --good-bg: #15332A; --bad: #FF9A8D; --bad-bg: #3A1E1B;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 720px; margin: 0 auto; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* Start screen */
+.start { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 28px 22px; display: flex; flex-direction: column; gap: 18px; }
+.start h1 { font-family: var(--font-display); font-size: clamp(28px, 7vw, 38px); line-height: 1.2; margin: 0; text-wrap: balance; }
+.start .sub { margin: 0; color: var(--muted); }
+.secs { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.secs li { display: flex; align-items: baseline; gap: 12px; padding: 10px 12px; background: var(--note); border-radius: 6px; }
+.secs .l { font-family: var(--font-mono); font-weight: 700; width: 1.4em; }
+.secs .n { flex: 1; min-width: 0; }
+.secs .r { font-family: var(--font-mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.primary { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 13px 20px; font-weight: 600; font-size: 16px; }
+.primary:hover { filter: brightness(1.08); }
+.ghost { background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 12px 18px; font-weight: 500; }
+.ghost:hover { border-color: var(--muted); }
+
+/* Progress */
+.top { display: grid; gap: 8px; margin-bottom: 14px; }
+.crumb { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+.crumb .sec { color: var(--muted); }
+.crumb .count { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; transition: width .25s ease; }
+
+/* Question */
+.q { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 18px; display: grid; gap: 16px; }
+.qhead { display: flex; gap: 14px; align-items: flex-start; }
+.tent { flex: none; width: 40px; height: 40px; background: var(--marker); color: var(--marker-ink); clip-path: polygon(14% 0, 86% 0, 100% 100%, 0 100%); display: grid; place-items: end center; padding-bottom: 5px; }
+.tent b { font-family: var(--font-mono); font-size: 16px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.qhead h2 { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.55; min-width: 0; text-wrap: pretty; }
+.box { background: var(--note); border-left: 3px solid var(--marker); border-radius: 4px; padding: 12px 14px; display: grid; gap: 6px; min-width: 0; }
+.box p { margin: 0; overflow-wrap: anywhere; }
+.box u { text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+.opts { display: grid; gap: 8px; }
+.opt { display: flex; gap: 12px; align-items: flex-start; text-align: left; width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; min-width: 0; transition: border-color .15s, background .15s; }
+.opt .mk { flex: none; font-size: 17px; line-height: 1.5; width: 1.3em; }
+.opt .tx { min-width: 0; overflow-wrap: anywhere; padding-top: 1px; }
+.opts:not(.locked) .opt:hover { border-color: var(--accent); background: var(--note); }
+.opt.right { border-color: var(--good); background: var(--good-bg); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-bg); }
+.opts.locked .opt { cursor: default; }
+
+.field { display: grid; gap: 10px; }
+.field label { font-size: 14px; color: var(--muted); }
+.field input[type="text"], .field select { width: 100%; font: inherit; padding: 11px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); min-width: 0; }
+.field input[type="text"]:disabled, .field select:disabled { opacity: .75; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { background: var(--note); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 15px; }
+.chip:disabled { opacity: .6; cursor: default; }
+.chip:not(:disabled):hover { border-color: var(--accent); }
+.sentence { margin: 0; display: block; line-height: 2.4; overflow-wrap: break-word; }
+.sentence select { display: inline-block; width: auto; min-width: 130px; max-width: 100%; margin: 0 2px; vertical-align: baseline; }
+.bank { font-family: var(--font-mono); font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+
+.fb { border-radius: 8px; padding: 14px 16px; display: grid; gap: 6px; border: 1px solid transparent; }
+.fb.good { background: var(--good-bg); border-color: var(--good); }
+.fb.bad { background: var(--bad-bg); border-color: var(--bad); }
+.fb .verdict { margin: 0; font-weight: 700; }
+.fb.good .verdict { color: var(--good); }
+.fb.bad .verdict { color: var(--bad); }
+.fb p { margin: 0; overflow-wrap: anywhere; }
+.fb .key { font-family: var(--font-mono); font-size: 14px; }
+.actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; }
+
+/* Result */
+.result { display: grid; gap: 18px; }
+.score { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px 22px; display: grid; gap: 14px; }
+.score .big { font-family: var(--font-display); font-size: clamp(44px, 12vw, 64px); line-height: 1; font-variant-numeric: tabular-nums; }
+.score .big small { font-family: var(--font-body); font-size: 18px; color: var(--muted); font-weight: 400; margin-left: 6px; }
+.brk { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.brk li { display: flex; gap: 12px; align-items: baseline; font-size: 15px; }
+.brk .n { flex: 1; min-width: 0; }
+.brk .v { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.key-grid { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 12px; }
+.key-grid h3 { margin: 0; font-size: 16px; }
+.cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; }
+.cell { border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; display: flex; justify-content: space-between; gap: 6px; align-items: baseline; font-family: var(--font-mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.cell.ok { background: var(--good-bg); border-color: var(--good); }
+.cell.no { background: var(--bad-bg); border-color: var(--bad); }
+.cell span:last-child { font-family: var(--font-body); }
+.subj { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; font-size: 15px; overflow-wrap: anywhere; }
+.row-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+@media (prefers-reduced-motion: reduce) { .bar i, .opt { transition: none; } }
+</style>
+
+<main class="wrap" id="app"></main>
+
+<script>
+(function () {
+  var MARKS = ['①', '②', '③', '④', '⑤'];
+  var SEC = {
+    W: { name: 'W. 워밍업', range: '1~2' },
+    A: { name: 'A. 내용 이해', range: '3~10' },
+    B: { name: 'B. 어휘', range: '11~15' },
+    C: { name: 'C. 어법', range: '16~17' },
+    D: { name: 'D. 서술형', range: '18~20' }
+  };
+
+  var Q = [
+    { id: 1, sec: 'W', type: 'mc',
+      stem: '이 글이 소개하는 인물의 이름은? (철자를 잘 보세요!)',
+      options: ['Frances Glasses Lee', 'Francis Class Lee', 'Frances Glessner Kim', 'Frances Glessner Lee', 'Frances Lee Glessner'],
+      answer: 3,
+      exp: '정답은 Frances Glessner Lee입니다.' },
+    { id: 2, sec: 'W', type: 'mc',
+      stem: 'Frances Glessner Lee는 업적을 인정받아 훗날 무엇이라고 불렸을까?',
+      options: ['음악의 아버지', '과학 수사의 어머니', '미니어처의 신', '하버드 의대 수석 졸업생', '시카고 최고의 명탐정'],
+      answer: 1,
+      exp: 'It is no wonder that she was called the “mother of forensic science.”' },
+    { id: 1, sec: 'A', type: 'mc',
+      stem: '본문 첫 단락에 따르면, forensic science의 과정을 순서대로 바르게 배열한 것은?',
+      box: ['(A) Scientists analyze everything and find some clues.', '(B) Detectives carefully collect all the possible evidence.', '(C) The clues are used to find the person who committed the crime.'],
+      options: ['(A) - (B) - (C)', '(A) - (C) - (B)', '(B) - (A) - (C)', '(B) - (C) - (A)', '(C) - (B) - (A)'],
+      answer: 2,
+      exp: '형사가 증거를 수집하고(B) → 과학자가 분석해 단서를 찾고(A) → 그 단서로 범인을 찾습니다(C). (p.37)' },
+    { id: 2, sec: 'A', type: 'mc',
+      stem: 'Frances Glessner Lee에 관한 내용으로 본문과 일치하지 않는 것은?',
+      options: ['1878년 시카고의 부유한 가정에서 태어났다.', '어린 나이에 의학에 관심을 갖게 되었다.', '하버드 의과대학에 다니는 것이 꿈이었다.', '결혼한 뒤 하버드 의과대학에 입학해 의사가 되었다.', '50대가 되어서야 의학 분야에서 경력을 시작할 수 있었다.'],
+      answer: 3,
+      exp: '당시 하버드 의대는 여성을 받지 않았고, 그녀는 결혼할 수밖에 없었습니다(had no choice but to get married). (p.38)' },
+    { id: 3, sec: 'A', type: 'mc',
+      stem: 'George Burgess Magrath가 수사 체계(investigation system)를 바꾸고 싶어 했던 이유로 가장 적절한 것은?',
+      options: ['의학 지식이 없는 사람들이 시신을 검사하지 않고 사망 사건을 종결해서', '사건을 수사할 형사의 수가 너무 적어서', '의대생들이 법의학을 배우려 하지 않아서', '범죄자들이 현장에 아무 흔적도 남기지 않아서', '실제 범죄 이야기가 대중에게 알려지지 않아서'],
+      answer: 0,
+      exp: 'people with no medical knowledge investigated and closed many death cases without examining the bodies. (p.38)' },
+    { id: 4, sec: 'A', type: 'mc',
+      stem: 'Lee가 법의학(legal medicine) 발전을 위해 한 일로 본문에 언급되지 않은 것은?',
+      options: ['책을 읽고 전문가들과 이야기하며 법의학을 공부했다.', '하버드 대학교를 설득해 자신의 재산으로 법의학과를 만들게 했다.', '희귀한 책과 문서를 갖춘 도서관을 세우는 일을 도왔다.', '세계 박람회를 이용해 대중에게 현대 검시관 제도를 알렸다.', '직접 검시관이 되어 사망 사건을 조사했다.'],
+      answer: 4,
+      exp: '①②③은 p.38, ④는 p.39에 나옵니다. 직접 검시관이 되었다는 내용은 없습니다.' },
+    { id: 5, sec: 'A', type: 'mc',
+      stem: 'Lee가 형사 교육용 도구를 생각해 내게 된 문제 상황으로 가장 적절한 것은?',
+      options: ['형사들이 사건 파일을 제대로 읽지 않았다.', '형사들이 물건을 만지고 밟아 자신도 모르게 단서를 훼손했다.', '형사들이 하버드의 법의학 강의에 참석하지 않았다.', '검시관들에게 독립적인 권한이 없었다.', '범죄 현장 미니어처를 만들 재료가 부족했다.'],
+      answer: 1,
+      exp: 'By touching and stepping on things, they often destroyed clues without realizing it. (p.39) ④는 법 개정이 필요했던 이유입니다.' },
+    { id: 6, sec: 'A', type: 'mc',
+      stem: 'Lee가 만든 범죄 현장 미니어처에 관한 설명으로 옳지 않은 것은?',
+      options: ['그녀의 취미에서 아이디어를 얻었다.', '실제 범죄 사건을 바탕으로 만들었다.', '핏자국 같은 세부 사항까지 담았다.', '1940년대와 1950년대에 약 20개를 만들었다.', '작은 램프나 병의 라벨 같은 사소한 것은 생략했다.'],
+      answer: 4,
+      exp: 'Lee did not miss even the smallest detail, such as a small lamp or a label on a jar. 가장 작은 부분까지 놓치지 않았습니다. (p.39)' },
+    { id: 7, sec: 'A', type: 'mc',
+      stem: 'Lee의 세미나에 관한 내용으로 본문과 일치하는 것은?',
+      options: ['1945년에 한 달 동안 열렸다.', '형사들은 사건 파일 없이 미니어처만 관찰했다.', '형사들은 현장이 사고인지 폭력 범죄인지 판단하기 위해 단서를 찾았다.', '1949년까지 미국 형사들만 참석했다.', '특수 요원과 군 관계자는 참석할 수 없었다.'],
+      answer: 2,
+      exp: '오답 해설: ①은 한 달이 아니라 일주일(week-long), ②는 사건 파일을 읽으면서(While reading case files) 관찰, ④는 캐나다에서도 참석, ⑤는 Special agents and military staff also attended. (p.40)' },
+    { id: 8, sec: 'A', type: 'mc',
+      stem: '다음 사건들을 일어난 순서대로 바르게 배열한 것은?',
+      box: ['(A) Harvard began to train future medical examiners.', '(B) Lee persuaded Harvard to make a new branch of study.', '(C) Lee gave her first lecture using her miniature crime scenes.', '(D) Lee used the World’s Fair to educate the public.'],
+      options: ['(B) - (A) - (D) - (C)', '(B) - (D) - (A) - (C)', '(D) - (B) - (A) - (C)', '(B) - (D) - (C) - (A)', '(D) - (A) - (B) - (C)'],
+      answer: 1,
+      exp: '(B) 1931 → (D) 1939~1940 → (A) 1940 → (C) 1945 순서입니다.' },
+
+    { id: 9, sec: 'B', type: 'mc',
+      stem: '단어와 우리말 뜻이 알맞게 짝지어지지 않은 것은?',
+      options: ['investigation : 수사', 'devote : 바치다', 'criminal : 탐정', 'expert : 전문가', 'struggle : 고군분투하다'],
+      answer: 2,
+      exp: 'criminal은 ‘범죄자’입니다. ‘탐정(형사)’은 detective입니다.' },
+    { id: 9, sec: 'B', type: 'mc',
+      stem: '단어와 영영풀이의 연결이 잘못된 것은?',
+      options: ['accurate : careless and full of mistakes', 'obvious : easy to see or understand', 'evidence : information or objects that help prove something', 'persuade : to make someone agree to do something by giving reasons', 'fortune : a large amount of money'],
+      answer: 0,
+      exp: 'accurate는 ‘정확한’이라는 뜻입니다(correct in every detail).' },
+    { id: 10, sec: 'B', type: 'mc',
+      stem: '다음 문장의 밑줄 친 observe와 같은 의미로 쓰인 것은?',
+      box: ['Lee thought detectives also had to learn how to <u>observe</u> crime scenes from a medical point of view.'],
+      options: ['We must observe the school rules.', 'Many Korean families observe Chuseok together.', 'Drivers should observe the speed limit.', 'Scientists observe the behavior of animals carefully.', 'They observe their grandmother’s birthday every year.'],
+      answer: 3,
+      exp: '본문의 observe는 ‘관찰하다’입니다. ①③은 (규칙을) 지키다, ②⑤는 (명절·기념일을) 기념하다.' },
+    { id: 11, sec: 'B', type: 'mc',
+      stem: '단어의 변형이 잘못된 것은?',
+      options: ['present → presence', 'convenient → convenience', 'dependent → independent', 'expensive → inexpensive', 'important → inimportant'],
+      answer: 4,
+      exp: 'important의 반의어는 unimportant입니다. (Word Formation: -ce, in-)' },
+    { id: 12, sec: 'B', type: 'mc',
+      stem: '(A), (B), (C)의 빈칸에 들어갈 말로 바르게 짝지어진 것은?',
+      box: ['(A) She had no ________ but to get married.', '(B) Lee came ________ with a creative tool.', '(C) Magrath’s passion ________ Lee’s interest in legal medicine.'],
+      options: ['choice - up - sparked', 'choice - out - sparked', 'way - up - destroyed', 'chance - up - sparked', 'way - out - destroyed'],
+      answer: 0,
+      exp: 'have no choice but to-v / come up with / spark one’s interest' },
+
+    { id: 13, sec: 'C', type: 'mc',
+      stem: '(A), (B), (C)의 각 네모 안에서 어법에 맞는 표현으로 바르게 짝지어진 것은?',
+      box: ['(A) It was not until she was in her fifties [ that / what ] Lee was able to start a career in medicine.', '(B) She decided to devote the rest of her life to [ develop / developing ] this field.', '(C) She thought laws had to be changed so that medical examiners [ had / having ] independent power.'],
+      options: ['that - develop - had', 'that - developing - had', 'what - developing - had', 'that - developing - having', 'what - develop - having'],
+      answer: 1,
+      exp: '(A) It was ~ that 강조 구문 (B) devote A to B에서 to는 전치사이므로 동명사 (C) so that + 주어 + 동사' },
+    { id: 14, sec: 'C', type: 'mc',
+      stem: '밑줄 친 It의 쓰임이 나머지 넷과 다른 것은?',
+      options: ['<u>It</u> was not until she was in her fifties that Lee was able to start a career.', '<u>It</u> was my cell phone that disrupted the silence in the library.', '<u>It</u> was during the storm that I realized the power of nature.', '<u>It</u> is no wonder that she was called the “mother of forensic science.”', '<u>It</u> was the delicious smell that led me to the restaurant.'],
+      html: true,
+      answer: 3,
+      exp: '④는 가주어 It(진주어 that절)입니다. 나머지는 모두 It is[was] ~ that 강조 구문입니다.' },
+
+    { id: 15, sec: 'D', type: 'text',
+      stem: '다음 우리말과 같은 뜻이 되도록 괄호 안의 말을 바르게 배열하시오.',
+      box: ['그녀가 ‘과학 수사의 어머니’로 불린 것은 놀랍지 않다.', '( is / called / that / it / she was / no wonder / the / “mother of forensic science.” )'],
+      chips: ['is', 'called', 'that', 'it', 'she was', 'no wonder', 'the', '“mother of forensic science.”'],
+      hint: '단어를 눌러 순서대로 이어 붙여 문장을 완성하세요. 직접 입력해서 고쳐도 됩니다.',
+      accept: ['It is no wonder that she was called', 'It is no wonder that she was called the “mother of forensic science.”'],
+      show: 'It is no wonder that she was called the “mother of forensic science.”',
+      exp: 'It is no wonder that ~: ~은 놀랍지 않다 (가주어 It)' },
+    { id: 16, sec: 'D', type: 'text',
+      stem: '다음 문장의 밑줄 친 부분을 강조하는 문장으로 바꿔 쓰시오.',
+      box: ['<u>In 1945</u>, she held a week-long seminar.'],
+      hint: '힌트: It was + 강조할 말 + that + 나머지 형식으로 쓰면 됩니다.',
+      accept: ['It was in 1945 that she held a week-long seminar'],
+      show: 'It was in 1945 that she held a week-long seminar.',
+      exp: 'It was + 강조할 말 + that + 나머지' },
+    { id: 17, sec: 'D', type: 'fill',
+      stem: '다음은 본문의 주제문이다. 빈칸 (1), (2)에 알맞은 말을 <보기>에서 골라 쓰시오.',
+      before: 'Frances Glessner Lee contributed to the advancement of',
+      mid: 'science by',
+      after: 'the field of legal medicine and teaching detectives to find clues in crime scenes.',
+      bank: ['military', 'forensic', 'destroying', 'developing', 'miniature'],
+      accept: ['forensic', 'developing'],
+      show: '(1) forensic  (2) developing',
+      exp: 'forensic science는 ‘과학 수사’입니다. by + 동명사에서 developing은 teaching과 병렬을 이룹니다. (destroying은 의미상 알맞지 않습니다.)' }
+  ];
+
+  Q.forEach(function (q, i) { q.id = i + 1; });
+
+  var app = document.getElementById('app');
+  var order = [];
+  var pos = 0;
+  var res = {};
+  var locked = false;
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function norm(s) {
+    return String(s).toLowerCase()
+      .replace(/[“”"‘’']/g, '')
+      .replace(/-/g, ' ')
+      .replace(/[.,!?;:]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+  function correctCount(sec) {
+    var n = 0, t = 0;
+    Q.forEach(function (q) {
+      if (sec && q.sec !== sec) return;
+      t++;
+      if (res[q.id] && res[q.id].ok) n++;
+    });
+    return { n: n, t: t };
+  }
+
+  function renderStart() {
+    var rows = Object.keys(SEC).map(function (k) {
+      var cnt = Q.filter(function (q) { return q.sec === k; }).length;
+      return '<li><span class="l">' + k + '</span><span class="n">' + SEC[k].name.slice(3) + '</span><span class="r">' + SEC[k].range + '번 · ' + cnt + '문항</span></li>';
+    }).join('');
+    app.innerHTML =
+      '<section class="start">' +
+      '<div class="eyebrow">1학년 공통영어Ⅱ · Lesson 2</div>' +
+      '<h1>본문 복습 퀴즈</h1>' +
+      '<p class="sub">Frances Glessner Lee와 과학 수사 이야기를 얼마나 기억하는지 확인해 보세요. 한 문제씩 풀면 바로 정답과 해설이 나옵니다.</p>' +
+      '<ul class="secs">' + rows + '</ul>' +
+      '<button class="primary" id="go" type="button">퀴즈 시작하기 (총 ' + Q.length + '문항)</button>' +
+      '</section>';
+    document.getElementById('go').onclick = function () {
+      res = {};
+      order = Q.map(function (_, i) { return i; });
+      pos = 0;
+      renderQuiz();
+    };
+  }
+
+  function renderQuiz() {
+    var q = Q[order[pos]];
+    locked = false;
+    var boxHtml = q.box ? '<div class="box">' + q.box.map(function (l) { return '<p>' + l + '</p>'; }).join('') + '</div>' : '';
+    app.innerHTML =
+      '<div class="top"><div class="crumb"><span class="sec">' + SEC[q.sec].name + '</span><span class="count">' + (pos + 1) + ' / ' + order.length + '</span></div>' +
+      '<div class="bar"><i style="width:' + (pos / order.length * 100) + '%"></i></div></div>' +
+      '<article class="q">' +
+      '<div class="qhead"><span class="tent"><b>' + q.id + '</b></span><h2>' + esc(q.stem) + '</h2></div>' +
+      boxHtml +
+      '<div id="ans"></div><div id="fb"></div>' +
+      '</article>';
+    var ans = document.getElementById('ans');
+
+    if (q.type === 'mc') {
+      ans.innerHTML = '<div class="opts" id="opts">' + q.options.map(function (t, i) {
+        return '<button type="button" class="opt" data-i="' + i + '"><span class="mk">' + MARKS[i] + '</span><span class="tx">' + (q.html ? t : esc(t)) + '</span></button>';
+      }).join('') + '</div>';
+      Array.prototype.forEach.call(ans.querySelectorAll('.opt'), function (b) {
+        b.onclick = function () { answerMC(q, Number(b.getAttribute('data-i'))); };
+      });
+    } else if (q.type === 'text') {
+      var chips = q.chips ? '<div class="chips">' + q.chips.map(function (c) { return '<button type="button" class="chip" data-w="' + esc(c) + '">' + esc(c) + '</button>'; }).join('') + '</div>' : '';
+      ans.innerHTML = '<div class="field"><label for="t">' + esc(q.hint) + '</label>' + chips +
+        '<input id="t" type="text" autocomplete="off" autocapitalize="off" spellcheck="false">' +
+        '<div class="actions">' + (q.chips ? '<button type="button" class="ghost" id="clr">지우고 다시 하기</button>' : '') + '<button type="button" class="primary" id="chk">정답 확인</button></div></div>';
+      var inp = document.getElementById('t');
+      Array.prototype.forEach.call(ans.querySelectorAll('.chip'), function (c) {
+        c.onclick = function () {
+          if (locked || c.disabled) return;
+          inp.value = (inp.value ? inp.value.replace(/\s+$/, '') + ' ' : '') + c.getAttribute('data-w');
+          c.disabled = true;
+          inp.focus();
+        };
+      });
+      var clr = document.getElementById('clr');
+      if (clr) clr.onclick = function () {
+        if (locked) return;
+        inp.value = '';
+        Array.prototype.forEach.call(ans.querySelectorAll('.chip'), function (c) { c.disabled = false; });
+        inp.focus();
+      };
+      inp.onkeydown = function (e) { if (e.key === 'Enter') { e.preventDefault(); checkText(q); } };
+      document.getElementById('chk').onclick = function () { checkText(q); };
+    } else {
+      var optsHtml = function (id) {
+        return '<select id="' + id + '"><option value="">선택</option>' + q.bank.map(function (b) { return '<option value="' + b + '">' + b + '</option>'; }).join('') + '</select>';
+      };
+      ans.innerHTML = '<div class="field">' +
+        '<p class="sentence">' + esc(q.before) + ' (1) ' + optsHtml('s1') + ' ' + esc(q.mid) + ' (2) ' + optsHtml('s2') + ' ' + esc(q.after) + '</p>' +
+        '<div class="bank">&lt;보기&gt; ' + q.bank.join(' / ') + '</div>' +
+        '<div class="actions"><button type="button" class="primary" id="chk">정답 확인</button></div></div>';
+      document.getElementById('chk').onclick = function () { checkFill(q); };
+    }
+  }
+
+  function feedback(q, ok, keyText) {
+    var last = pos === order.length - 1;
+    var fb = document.getElementById('fb');
+    fb.innerHTML =
+      '<div class="fb ' + (ok ? 'good' : 'bad') + '">' +
+      '<p class="verdict">' + (ok ? '정답입니다' : '오답입니다') + '</p>' +
+      (keyText ? '<p class="key">정답: ' + esc(keyText) + '</p>' : '') +
+      '<p>' + esc(q.exp) + '</p></div>' +
+      '<div class="actions" style="margin-top:12px"><button type="button" class="primary" id="next">' + (last ? '결과 보기' : '다음 문제') + '</button></div>';
+    var nx = document.getElementById('next');
+    nx.onclick = function () {
+      if (last) { renderResult(); } else { pos++; renderQuiz(); window.scrollTo(0, 0); }
+    };
+    nx.focus({ preventScroll: true });
+    fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  function answerMC(q, i) {
+    if (locked) return;
+    locked = true;
+    var ok = i === q.answer;
+    res[q.id] = { ok: ok };
+    var opts = document.getElementById('opts');
+    opts.className = 'opts locked';
+    Array.prototype.forEach.call(opts.querySelectorAll('.opt'), function (b, idx) {
+      b.disabled = true;
+      if (idx === q.answer) b.classList.add('right');
+      else if (idx === i) b.classList.add('wrong');
+    });
+    feedback(q, ok, ok ? '' : MARKS[q.answer] + ' ' + stripTags(q.options[q.answer]));
+  }
+  function stripTags(s) { return String(s).replace(/<[^>]+>/g, ''); }
+
+  function checkText(q) {
+    if (locked) return;
+    var inp = document.getElementById('t');
+    var val = inp.value;
+    if (!norm(val)) { inp.focus(); return; }
+    locked = true;
+    inp.disabled = true;
+    document.getElementById('chk').disabled = true;
+    var clrBtn = document.getElementById('clr');
+    if (clrBtn) clrBtn.disabled = true;
+    Array.prototype.forEach.call(document.querySelectorAll('.chip'), function (c) { c.disabled = true; });
+    var ok = q.accept.some(function (a) { return norm(a) === norm(val); });
+    res[q.id] = { ok: ok };
+    feedback(q, ok, ok ? '' : q.show);
+  }
+
+  function checkFill(q) {
+    if (locked) return;
+    var a = document.getElementById('s1'), b = document.getElementById('s2');
+    if (!a.value || !b.value) { (a.value ? b : a).focus(); return; }
+    locked = true;
+    a.disabled = true; b.disabled = true;
+    document.getElementById('chk').disabled = true;
+    var ok = a.value === q.accept[0] && b.value === q.accept[1];
+    res[q.id] = { ok: ok };
+    feedback(q, ok, ok ? '' : q.show);
+  }
+
+  function renderResult() {
+    var all = correctCount();
+    var secRows = Object.keys(SEC).map(function (k) {
+      var c = correctCount(k);
+      return '<li><span class="n">' + SEC[k].name + '</span><span class="v">' + c.n + ' / ' + c.t + '</span></li>';
+    }).join('');
+    var cells = Q.filter(function (q) { return q.type === 'mc'; }).map(function (q) {
+      var r = res[q.id];
+      var st = r ? (r.ok ? 'ok' : 'no') : '';
+      return '<div class="cell ' + st + '"><span>' + q.id + '.</span><span>' + MARKS[q.answer] + '</span></div>';
+    }).join('');
+    var subj = Q.filter(function (q) { return q.type !== 'mc'; }).map(function (q) {
+      var r = res[q.id];
+      return '<li><b>' + q.id + '번</b> ' + (r ? (r.ok ? '(맞음)' : '(틀림)') : '') + ' ' + esc(q.show) + '</li>';
+    }).join('');
+    var wrong = Q.filter(function (q) { return res[q.id] && !res[q.id].ok; });
+    var msg = all.n === all.t ? '모두 맞혔습니다.' : (wrong.length + '문제를 틀렸습니다. 해설을 보고 다시 풀어 보세요.');
+    app.innerHTML =
+      '<section class="result">' +
+      '<div class="score"><div class="eyebrow">Lesson 2 본문 복습 퀴즈</div>' +
+      '<div class="big">' + all.n + '<small>/ ' + all.t + '</small></div><p style="margin:0">' + msg + '</p>' +
+      '<ul class="brk">' + secRows + '</ul></div>' +
+      '<div class="key-grid"><h3>객관식 정답 한눈에 보기</h3><div class="cells">' + cells + '</div>' +
+      '<h3>서술형 정답</h3><ul class="subj">' + subj + '</ul></div>' +
+      '<div class="row-actions">' +
+      (wrong.length ? '<button type="button" class="primary" id="retry">틀린 문제 다시 풀기 (' + wrong.length + ')</button>' : '') +
+      '<button type="button" class="ghost" id="again">처음부터 다시 풀기</button></div>' +
+      '</section>';
+    window.scrollTo(0, 0);
+    var rt = document.getElementById('retry');
+    if (rt) rt.onclick = function () {
+      order = [];
+      Q.forEach(function (q, i) { if (res[q.id] && !res[q.id].ok) { order.push(i); delete res[q.id]; } });
+      pos = 0;
+      renderQuiz();
+      window.scrollTo(0, 0);
+    };
+    document.getElementById('again').onclick = renderStart;
+  }
+
+  document.addEventListener('keydown', function (e) {
+    var tag = (e.target && e.target.tagName) || '';
+    if (tag === 'INPUT' || tag === 'SELECT') return;
+    if (e.key >= '1' && e.key <= '5') {
+      var opts = document.querySelectorAll('#opts .opt');
+      var i = Number(e.key) - 1;
+      if (!locked && opts[i]) opts[i].click();
+    }
+  });
+
+  renderStart();
+})();
+</script>
+
+</body></html>
